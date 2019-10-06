@@ -1,0 +1,12 @@
+{
+  "name": "綾波",
+  "type": "DESTROYER",
+  "life": "D",
+  "atk": "D",
+  "torpedo": "A",
+  "avoid": "A",
+  "air_def": "D",
+  "air_atk": "E",
+  "range": "D"
+
+}

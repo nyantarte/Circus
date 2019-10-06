@@ -1,0 +1,11 @@
+{
+  "name": "イラストリアス",
+  "type": "AIR_CARRIER",
+  "life": "S",
+  "atk": "E",
+  "torpedo": "E",
+  "avoid": "D",
+  "air_def": "B",
+  "air_atk": "A",
+  "range": "S"
+}

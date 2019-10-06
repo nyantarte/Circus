@@ -1,0 +1,11 @@
+{
+  "name": "レキシントン",
+  "type": "AIR_CARRIER",
+  "life": "A",
+  "atk": "C",
+  "torpedo": "E",
+  "avoid": "C",
+  "air_def": "B",
+  "air_atk": "A",
+  "range": "S"
+}

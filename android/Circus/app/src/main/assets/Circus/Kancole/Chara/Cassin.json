@@ -1,0 +1,11 @@
+{
+  "name": "カッシン",
+  "type": "DESTROYER",
+  "life": "C",
+  "atk": "C",
+  "torpedo": "C",
+  "avoid": "B",
+  "air_def": "C",
+  "air_atk": "E",
+  "range": "D"
+}

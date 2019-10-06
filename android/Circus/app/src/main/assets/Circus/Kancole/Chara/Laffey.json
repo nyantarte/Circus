@@ -1,0 +1,12 @@
+{
+  "name": "ラフィー",
+  "type": "DESTROYER",
+  "life": "C",
+  "atk": "B",
+  "torpedo": "C",
+  "avoid": "B",
+  "air_def": "B",
+  "air_atk": "E",
+  "range": "D"
+
+}

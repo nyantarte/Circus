@@ -1,0 +1,12 @@
+{
+  "name": "ジャベリン",
+  "type": "DESTROYER",
+  "life": "D",
+  "atk": "D",
+  "torpedo": "B",
+  "avoid": "A",
+  "air_def": "D",
+  "air_atk": "E",
+  "range": "D"
+
+}
