@@ -41,36 +41,9 @@ class SearchTransactionResultActivity : AppCompatActivity() ,AdapterView.OnItemC
         bar!!.setDisplayHomeAsUpEnabled(true)
 
 
-        val tmpTbl=HashMap<String,ArrayList<MoneyBookTransaction>>()
-        for(s in (intent.getSerializableExtra(SEARCH_RESULT_LIST_KEY) as Array<MoneyBookTransaction>)){
-//            val obj=JSONObject(s)
-//            val tran=MoneyBookTransaction(obj)
-            val tran=s
-            if(!tmpTbl.containsKey(tran.usage)){
-                tmpTbl.put(tran.usage,ArrayList<MoneyBookTransaction>())
-
-            }
-            tmpTbl.get((tran.usage))!!.add(tran)
-        }
-        var vIn=0
-        var vOut=0
-        for(k in tmpTbl.keys){
-            var v=0
-            val l=tmpTbl.get(k)
-            for(i in 0..l!!.size-1){
-                val tv=l[i].value
-                v+=tv
-                if(0 > tv){
-                    vOut+=tv
-                }else{
-                    vIn+=tv
-                }
-            }
-            m_categoryList.put(String.format("%s %d",k,v),l)
-        }
         m_resultList=findViewById(R.id.SearchTransactionResultList)
 
-        m_resultList!!.adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,m_categoryList.keys.toTypedArray())
+
         m_resultList!!.setOnItemClickListener(this)
 
         val fmt=SimpleDateFormat.getDateInstance()
@@ -81,7 +54,7 @@ class SearchTransactionResultActivity : AppCompatActivity() ,AdapterView.OnItemC
         m_resultDate!!.text=String.format("%s - %s",beginDate,endDate)
 
         m_resultValue=findViewById(R.id.SearchResultValue)
-        m_resultValue!!.text=String.format("収入 %d 支出 %d",vIn,vOut)
+
     }
 
 
@@ -112,7 +85,41 @@ class SearchTransactionResultActivity : AppCompatActivity() ,AdapterView.OnItemC
         i.putExtra(TransactionListActivity.TRANS_LIST_KEY,list!!.toTypedArray())
         i.putExtra(TransactionListActivity.TRANS_BEGIN_DATE_KEY,intent.getLongExtra(SEARCH_RESULT_DATE_BEGIN_KEY,0))
         i.putExtra(TransactionListActivity.TRANS_END_DATE_KEY,intent.getLongExtra(SEARCH_RESULT_DATE_END_KEY,0))
+        i.putExtra(TransactionListActivity.TRANS_USAGE_KEY,key as String)
         startActivity(i)
 
+    }
+    override fun onStart(){
+        super.onStart()
+        m_categoryList.clear()
+        val tmpTbl=HashMap<String,ArrayList<MoneyBookTransaction>>()
+        for(s in (intent.getSerializableExtra(SEARCH_RESULT_LIST_KEY) as Array<MoneyBookTransaction>)){
+//            val obj=JSONObject(s)
+//            val tran=MoneyBookTransaction(obj)
+            val tran=s
+            if(!tmpTbl.containsKey(tran.usage)){
+                tmpTbl.put(tran.usage,ArrayList<MoneyBookTransaction>())
+
+            }
+            tmpTbl.get((tran.usage))!!.add(tran)
+        }
+        var vIn=0
+        var vOut=0
+        for(k in tmpTbl.keys){
+            var v=0
+            val l=tmpTbl.get(k)
+            for(i in 0..l!!.size-1){
+                val tv=l[i].value
+                v+=tv
+                if(0 > tv){
+                    vOut+=tv
+                }else{
+                    vIn+=tv
+                }
+            }
+            m_categoryList.put(String.format("%s %d",k,v),l)
+        }
+        m_resultList!!.adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,m_categoryList.keys.toTypedArray())
+        m_resultValue!!.text=String.format("収入 %d 支出 %d",vIn,vOut)
     }
 }

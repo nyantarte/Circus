@@ -1,0 +1,12 @@
+{
+  "name": "ダウンズ",
+  "type": "DESTROYER",
+  "rareity": "N",
+  "atk": "C",
+  "life": "C",
+  "air_def": "C",
+  "avoid": "B",
+  "air_atk": "E",
+  "torpedo": "C"
+
+}

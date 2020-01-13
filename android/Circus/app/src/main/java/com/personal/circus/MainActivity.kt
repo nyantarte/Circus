@@ -9,7 +9,7 @@ import com.personal.circus.AnalogCamera.CameraActivity
 import com.personal.circus.Kancole.KancoreMenuActivity
 import com.personal.circus.Moneybook.MoneyBookActivity
 import com.personal.circus.Weather.LivedoorWeatherActivity
-
+import com.personal.circus.Trainroute.*;
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +48,11 @@ class MainActivity : AppCompatActivity() {
             }
             com.personal.circus.R.id.main_menu_weather->{
                 val i=Intent(this, LivedoorWeatherActivity::class.java)
+                this.startActivity(i)
+
+            }
+            com.personal.circus.R.id.main_menu_trainroute->{
+                val i=Intent(this, TrainRouteMainActivity::class.java)
                 this.startActivity(i)
 
             }

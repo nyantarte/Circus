@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Config"
+        android:textSize="36sp" />
+
+    <Button
+        android:id="@+id/CreateChara"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create charactors" />
+
+    <Button
+        android:id="@+id/CreateMapBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create map" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Graphic mode" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Native" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="OpenGL" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ReturnFromConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Return" />
+</LinearLayout>

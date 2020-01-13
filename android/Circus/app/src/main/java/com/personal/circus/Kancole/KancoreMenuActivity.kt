@@ -44,6 +44,13 @@ class KancoreMenuActivity : AppCompatActivity(),View.OnClickListener {
                 finish()
                 return true
             }
+
+            com.personal.circus.R.id.KancoreParty-> {
+                val i = Intent(this, KancorePartyActivity::class.java)
+                this.startActivity(i)
+
+            }
+
             com.personal.circus.R.id.KancoreDock-> {
                 val i = Intent(this, KancoreDockActivity::class.java)
                 this.startActivity(i)
@@ -61,6 +68,13 @@ class KancoreMenuActivity : AppCompatActivity(),View.OnClickListener {
                 this.startActivity(i)
 
             }
+            com.personal.circus.R.id.KancoreCatalog->{
+                val i = Intent(this, CatalogActivity::class.java)
+//                i.putExtra(SurfaceActivity.GAME_TYPE,SurfaceActivity.GAME_KANCORE_ROOT_BOX)
+                this.startActivity(i)
+
+            }
+
         }
         return super.onOptionsItemSelected(item)
     }

@@ -1,0 +1,13 @@
+{
+  "name": "プリンス・オブ・ウェールズ",
+  "type": "BATTLESHIP",
+  "rareity": "SS",
+  "life": "A",
+  "atk": "S",
+  "torpedo": "E",
+  "avoid": "D",
+  "air_def": "D",
+  "air_atk": "E",
+  "range": "A"
+
+}

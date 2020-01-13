@@ -1,0 +1,13 @@
+{
+  "name": "加賀",
+  "type": "AIRCARRIER",
+  "rareity": "SS",
+  "atk": "E",
+  "life": "B",
+  "air_atk": "S",
+  "torpedo": "E",
+  "air_def": "B",
+  "avoid": "C",
+  "range": "S"
+
+}

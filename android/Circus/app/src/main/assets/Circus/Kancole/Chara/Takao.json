@@ -1,0 +1,11 @@
+{
+  "name": "高雄",
+  "type": "HEAVYCRUISER",
+  "rareity": "SS",
+  "life": "A",
+  "atk": "A",
+  "torpedo": "C",
+  "avoid": "C",
+  "air_def": "C",
+  "air_atk": "E"
+}

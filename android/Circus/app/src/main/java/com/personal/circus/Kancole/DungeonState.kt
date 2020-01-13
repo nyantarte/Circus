@@ -25,9 +25,10 @@ class DungeonState : IGameState {
     private var m_dir=Vector.zero.clone() as Vector
     private var m_nCurRoom=0
     private var m_nMoveCount=0
+    private var m_nLevel=0
     constructor(s: IGameSystem){
 
-        createFloor(s)
+        createFloor(s,m_nLevel)
 
     }
     override fun onDraw(r: IRenderer){
@@ -50,18 +51,27 @@ class DungeonState : IGameState {
     }
     override fun onUpdate(s: IGameSystem){
 
-        if(KancoleConfig.PLAYER_MOVE_COUNT==m_nMoveCount && m_nCurRoom==m_rooms.size){
-
-        }
         if(0 < m_nMoveCount){
             m_pos=Vector.add(Vector(),m_pos,m_dir)
             --m_nMoveCount
-        }else if(0==m_nMoveCount && m_nCurRoom< m_rooms.size-1){
-            m_pos=Vector(m_rooms[m_nCurRoom++]!!.rect)
-            val tmp=Vector.sub(Vector(),Vector(m_rooms[m_nCurRoom]!!.rect),m_pos)
-            Vector.div(m_dir,tmp,KancoleConfig.PLAYER_MOVE_COUNT.toFloat())
-            m_nMoveCount=KancoleConfig.PLAYER_MOVE_COUNT
-            s.getStateStack().push(BattleState(KancoreData.getInstance(null)!!.getPlayerFleet(),KancoreData.getInstance(null)!!.createRandomFleet(s),s))
+        }else if(0==m_nMoveCount){
+            if(m_nCurRoom==m_rooms.size){
+                createFloor(s,++m_nLevel)
+                m_nCurRoom=0
+
+            }
+
+                m_pos = Vector(m_rooms[m_nCurRoom++]!!.rect)
+                val tmp = Vector.sub(Vector(), Vector(m_rooms[m_nCurRoom]!!.rect), m_pos)
+                Vector.div(m_dir, tmp, KancoleConfig.PLAYER_MOVE_COUNT.toFloat())
+                m_nMoveCount = KancoleConfig.PLAYER_MOVE_COUNT
+                s.getStateStack().push(
+                    BattleState(
+                        KancoreData.getInstance(null)!!.getPlayerFleet(),
+                        KancoreData.getInstance(null)!!.createRandomFleet(s),
+                        s
+                    )
+                )
         }
     }
     override fun onTouch(s: IGameSystem, x: Int, y: Int){}
@@ -92,12 +102,13 @@ class DungeonState : IGameState {
             }
         }
     }
-    private fun createFloor(s:IGameSystem){
+    private fun createFloor(s:IGameSystem,nLevel:Int){
         val rH=                s.getScreenMode().getHeight()/3
         for(i in 0..2) {
             createRoom(s, Rect(s.getScreenMode().getRect().left, s.getScreenMode().getRect().top+rH*i, s.getScreenMode().getWidth(),rH*(i+1)))
         }
 
+        m_nLevel=nLevel
     }
 
 }

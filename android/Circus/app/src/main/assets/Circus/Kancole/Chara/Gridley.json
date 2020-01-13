@@ -1,0 +1,11 @@
+{
+  "name": "グリッドレイ",
+  "type": "DESTROYER",
+  "rareity": "R",
+  "atk": "C",
+  "life": "C",
+  "air_def": "C",
+  "avoid": "B",
+  "air_atk": "E",
+  "torpedo": "B"
+}

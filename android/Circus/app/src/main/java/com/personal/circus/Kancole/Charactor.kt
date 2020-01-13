@@ -5,8 +5,9 @@ import org.json.JSONObject
 import java.util.*
 import com.personal.circus.*;
 import com.personal.circus.Vector
+import java.io.Serializable
 
-public class Charactor :Cloneable{
+public class Charactor :Cloneable,Serializable{
     public class ParamRank {
         enum class RANK(val rankName: String,val sig:Int, val value: Int) {
 
@@ -98,6 +99,14 @@ public class Charactor :Cloneable{
         }
 
     }
+    private var m_bustupImageStr:String?=null
+    var bustupImageStr:String?
+        get(){
+            return m_bustupImageStr
+        }
+        set(v:String?){
+            m_bustupImageStr=v
+        }
 
     private var m_level:Int=0
     var Level:Int
@@ -124,7 +133,14 @@ public class Charactor :Cloneable{
         m_name=v;
     }
 
-
+    private var m_id:Long=0
+    var id:Long
+    get(){
+        return m_id
+    }
+    set(i:Long){
+        m_id=i
+    }
     constructor(){}
     override fun toString():String{
         return m_name
@@ -193,7 +209,11 @@ public class Charactor :Cloneable{
                 c.paramRank.avoidRank = enumValueOf<ParamRank.RANK>(o.getString("avoid"))
                 c.paramRank.airDefRank = enumValueOf<ParamRank.RANK>(o.getString("air_def"))
                 c.paramRank.airAtkRank = enumValueOf<ParamRank.RANK>(o.getString("air_atk"))
-                c.paramRank.rangeRank = enumValueOf<ParamRank.RANK>(o.getString("range"))
+         //       c.paramRank.rangeRank = enumValueOf<ParamRank.RANK>(o.getString("range"))
+                if(o.has("bustupImage")) {
+                    c.m_bustupImageStr = o.getString("bustupImage")
+
+                }
                 c.setupParams()
             }else{
                 c=KancoreData.getInstance(null)!!.getCharaTbl()[c.name]!!.clone() as Charactor
@@ -201,6 +221,9 @@ public class Charactor :Cloneable{
                 c.setupParams()
                 c.Life=o.getInt("life")
                 c.Exp=o.getInt("exp")
+                if(o.has("id")){
+                    c.id=o.getLong("id")
+                }
             }
             return c;
         }
@@ -214,6 +237,7 @@ public class Charactor :Cloneable{
         o.put("level",this.Level)
         o.put("life",this.Life)
         o.put("exp",this.Exp)
+        o.put("id",this.m_id)
         return o
     }
 
@@ -221,6 +245,8 @@ public class Charactor :Cloneable{
         val c=Charactor()
         c.name=this.name
         c.m_paramRank=this.m_paramRank
+        c.m_bustupImageStr=this.m_bustupImageStr
+        c.m_id=Date().time
         c.setupParams()
         return c
     }

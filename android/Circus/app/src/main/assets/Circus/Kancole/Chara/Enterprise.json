@@ -1,0 +1,12 @@
+{
+  "name": "エンタープライズ",
+  "type": "AIRCARRIER",
+  "rareity": "SSR",
+  "life": "B",
+  "atk": "E",
+  "torpedo": "E",
+  "avoid": "B",
+  "air_def": "B",
+  "air_atk": "S",
+  "range": "S"
+}

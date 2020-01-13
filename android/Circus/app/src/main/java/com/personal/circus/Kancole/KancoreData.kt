@@ -7,13 +7,21 @@ import com.personal.circus.IOUtils
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.lang.Exception
 
+/**
+ * @brief 艦これのデータを管理するクラス
+ */
 class KancoreData{
-    private val m_charaCollectTbl=java.util.HashMap<String,Charactor>()
-    private val m_playerCharaTbl=java.util.ArrayList<Charactor>()
-    private var m_playerFleet=Fleet()
+    private val m_charaCatalogTbl=java.util.HashMap<String,Charactor>()/*! キャラクター図鑑用のテーブル*/
+    private val m_playerCharaTbl=java.util.ArrayList<Charactor>()/*! プレイヤーが保有するキャラクターのテーブル*/
+    private var m_playerFleet=Fleet()   /*!プレイヤーの艦隊*/
 
 
+    /**
+     * @brief キャラクターデータをロードを行う
+     * @param am アセットデータをロードするのに使用する
+     */
     private constructor(am:AssetManager?){
         assert(null!=am)
 
@@ -21,9 +29,20 @@ class KancoreData{
             val txt=IOUtils.loadPlainText(File(KancoleConfig.CHARA_DIR,f),am)
             val jsonObj=JSONObject(txt)
             val obj=Charactor.loadFromJSON(jsonObj)
-            m_charaCollectTbl.put(obj.name,obj)
+            if(null!=obj.bustupImageStr) {
+                obj.bustupImageStr=KancoleConfig.IMAGE_DIR + "/" + obj.bustupImageStr
+                try {
+                    val i =
+                        IOUtils.getBitmap(obj.bustupImageStr,am)
+                }catch (e:Exception) {
+                        obj.bustupImageStr = null
+                    Log.i(this.javaClass.name,String.format("Failed to load image.file=%s",obj.bustupImageStr))
+                    e.printStackTrace()
+                }
+            }
+            m_charaCatalogTbl.put(obj.name,obj)
         }
-        val c=m_charaCollectTbl.values.elementAt(0)!!.clone() as Charactor
+        val c=m_charaCatalogTbl.values.elementAt(0)!!.clone() as Charactor
         m_playerCharaTbl.add(c)
         m_playerFleet.members[0]= m_playerCharaTbl.elementAt(0)
 
@@ -31,6 +50,12 @@ class KancoreData{
     companion object{
         @JvmStatic
         private var s_obj:KancoreData?=null
+
+        /**
+         * @brief ゲームデータのインスタンスを返す。
+         *      　初期化されていなかったら初期化を行う
+         * @param am コンストラクタに渡すAssetManager。初期化済みならnullでも問題なし。
+         */
         @JvmStatic
         fun getInstance(am:AssetManager?):KancoreData?{
             if(null== s_obj){
@@ -41,7 +66,7 @@ class KancoreData{
 
     }
     fun getCharaTbl():HashMap<String,Charactor>{
-        return m_charaCollectTbl;
+        return m_charaCatalogTbl;
     }
 
     fun getPlayerCharaTbl():ArrayList<Charactor>{
@@ -54,10 +79,10 @@ class KancoreData{
 
     fun createRandomFleet(s:IGameSystem):Fleet{
         val r=Fleet()
-        val ctbl= m_charaCollectTbl
+        val ctbl= m_charaCatalogTbl
         for(i in 0..r.members.size-1){
             val k=(s.getRand().nextFloat().toInt()*ctbl.size)
-            r.members[i]= m_charaCollectTbl.values.elementAt(k)!!.clone() as Charactor
+            r.members[i]= m_charaCatalogTbl.values.elementAt(k)!!.clone() as Charactor
             r.members[i]!!.Level=1
             r.members[i]!!.setupParams()
 
@@ -65,6 +90,9 @@ class KancoreData{
         return r
     }
 
+    /**
+     * @brief 現在のゲームの状態を保存する
+     */
     fun saveState(){
         val saveO=IOUtils.createFile(KancoleConfig.SAVE_FILE)
         val o=JSONObject()
@@ -105,8 +133,29 @@ class KancoreData{
 
     }
 
-    fun getRandomChara(s:IGameSystem):Charactor{
-        return m_charaCollectTbl.values.elementAt((m_charaCollectTbl.values.size* s.getRand().nextFloat()).toInt())
+    fun getRandomChara(s:IGameSystem,nLevel:Int):Charactor{
+        val c= m_charaCatalogTbl.values.elementAt((m_charaCatalogTbl.values.size* s.getRand().nextFloat()).toInt())
+        c.Level=nLevel
+        c.setupParams()
+        return c
+    }
+
+    fun getPlayerCharaListNotInFleet():List<Charactor>{
+        val resultList=ArrayList<Charactor>()
+        for(c in m_playerCharaTbl){
+            var isInParty=false
+            for(fm in m_playerFleet.members){
+                if(fm==c){
+                    isInParty=true
+                    break
+                }
+            }
+            if(!isInParty){
+                resultList.add(c)
+            }
+        }
+
+        return resultList
     }
 
 

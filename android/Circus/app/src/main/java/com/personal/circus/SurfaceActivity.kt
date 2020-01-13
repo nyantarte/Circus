@@ -7,6 +7,7 @@ import android.view.*
 import java.util.*
 import kotlin.collections.HashMap
 import android.R
+import android.content.res.AssetManager
 import android.graphics.Color
 import android.util.Log
 import com.personal.circus.Kancole.DungeonState

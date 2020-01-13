@@ -1,14 +1,14 @@
 package com.personal.circus.Kancole
 
+import android.content.res.AssetManager
 import android.graphics.Color
+import android.graphics.RadialGradient
 import android.graphics.Rect
 import android.util.Log
+import com.personal.circus.*
 import com.personal.circus.Vector
-import com.personal.circus.IGameState
-import com.personal.circus.IGameSystem
-import com.personal.circus.IRenderer
-import com.personal.circus.ScreenMode
 import java.util.*
+import kotlin.math.PI
 
 /**
  * @brief
@@ -27,7 +27,10 @@ class BattleState :IGameState{
     private var m_bulletPos:Vector?=null    /*!Current bullet position.It moves from attacker to defender*/
     private var m_bulletSpeed:Vector?=null /*!Bullet move speed*/
 
+    private var m_assets:AssetManager?=null
     /**
+     * @brief The constructor will intialize player/enemy fleet.
+     *         Then it will initialize the dungeon rooms, attack queue.
      * @param p Player fleet object
      * @param e Enemy fleet object
      * @param s IGameSystem instance
@@ -38,14 +41,23 @@ class BattleState :IGameState{
 
         m_scMode=s.getScreenMode()
 
+        m_assets=s.getAssets()
         setupPos()
         setupQueue()
 
 
     }
+
+    /**
+     * @brief Draws the dungeon process
+     */
     override fun onDraw(r: IRenderer){
+        //Paint background to white
         r.setColor(Color.WHITE)
 
+        /**
+         * Draw the charactor banner
+         */
         for(i in 0..m_player!!.members.size-1){
             if(null!=m_player!!.members[i]){
                 val c=m_player!!.members[i]
@@ -69,9 +81,12 @@ class BattleState :IGameState{
             }
 
         }
-
-        if(null!=m_bulletPos){
-            r.fillRect(m_bulletPos!!,32)
+        //If the bullet is moveing then draw
+        if(null!=m_bulletPos) {
+            r.fillRect(m_bulletPos!!, 32)
+            if (null!=m_attacker!!.bustupImageStr) {
+                r.drawImage(0, 0, IOUtils.getBitmap(m_attacker!!.bustupImageStr, m_assets!!))
+            }
         }
 
     }
@@ -96,12 +111,15 @@ class BattleState :IGameState{
             m_bulletPos=Vector(m_attacker!!.pos)
             m_bulletSpeed=Vector.sub(Vector(),Vector(m_defender!!.pos),m_bulletPos!!)
             m_bulletSpeed=Vector.div(Vector(),m_bulletSpeed!!,30.0F)
+            m_bulletSpeed!!.setY((m_bulletSpeed!!.getY()+Math.sin(0.25f* PI)*15) as Float);
             m_bulletCount=30
 
 
         }else{
             --m_bulletCount
             m_bulletPos=Vector.add(Vector(),m_bulletPos!!,m_bulletSpeed!!)
+            m_bulletSpeed!!.setY(m_bulletSpeed!!.getY()-1);
+
         }
     }
     override fun onTouch(s: IGameSystem, x: Int, y: Int){

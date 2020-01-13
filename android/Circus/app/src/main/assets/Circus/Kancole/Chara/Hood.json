@@ -1,0 +1,13 @@
+{
+  "name": "フッド",
+  "type": "BATTLESHIP",
+  "rareity": "SS",
+  "life": "A",
+  "atk": "A",
+  "torpedo": "E",
+  "avoid": "C",
+  "air_def": "B",
+  "air_atk": "E",
+  "range": "A"
+
+}

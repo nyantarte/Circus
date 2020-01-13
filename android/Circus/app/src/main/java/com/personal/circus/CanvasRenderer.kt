@@ -1,8 +1,10 @@
 package com.personal.circus;
 
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.media.Image
 
 class CanvasRenderer:IRenderer {
 
@@ -38,6 +40,10 @@ class CanvasRenderer:IRenderer {
         m_paint.setStyle(Paint.Style.FILL);
         m_canvas?.drawText(t,x.toFloat(),y.toFloat(),m_paint);
     }
+    override fun drawImage(x:Int,y:Int,im: Bitmap){
+        m_canvas?.drawBitmap(im,x.toFloat(),y.toFloat(),m_paint)
+    }
+
     override fun calcTextRect(t:String): Rect{
         val w = m_paint.measureText(t)
         return Rect(0, 0, w.toInt(), m_paint.textSize.toInt())

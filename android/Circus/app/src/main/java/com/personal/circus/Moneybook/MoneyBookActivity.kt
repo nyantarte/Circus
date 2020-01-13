@@ -3,6 +3,7 @@ package com.personal.circus.Moneybook
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -23,6 +24,7 @@ class MoneyBookActivity : AppCompatActivity() {
     private var m_file:IMoneyBookFile?=null/*!家計簿データを管理するオブジェクト*/
     private var m_dateRange:TextView?=null
     private var m_value:TextView?=null
+    private var m_period:Int=0
     companion object{
         @JvmStatic
         val FILE_TYPE_KEY="FileType"
@@ -104,6 +106,8 @@ class MoneyBookActivity : AppCompatActivity() {
         c.set(Calendar.SECOND, 0)
         c.set(Calendar.MILLISECOND, 0)
 
+        Log.i(this.javaClass.name,String.format("Today is %s",c.toString()))
+
         if (period > c.get(Calendar.DAY_OF_MONTH)) {
             c.add(Calendar.MONTH, -1)
             c.set(Calendar.DAY_OF_MONTH, period)
@@ -112,6 +116,7 @@ class MoneyBookActivity : AppCompatActivity() {
             c.set(Calendar.DAY_OF_MONTH, period)
             m_beginDate = com.personal.circus.DateUtils.adjustHolyday(c).getTime().time
         }
+        Log.i(this.javaClass.name,String.format("Begin period date is %s",c.toString()))
         c.add(Calendar.MONTH, 1)
         c.set(Calendar.DAY_OF_MONTH, period)
         c = com.personal.circus.DateUtils.adjustHolyday(c)
@@ -120,6 +125,7 @@ class MoneyBookActivity : AppCompatActivity() {
         c.set(Calendar.MINUTE, 59)
         c.set(Calendar.SECOND, 59)
         c.set(Calendar.MILLISECOND, 999)
+        Log.i(this.javaClass.name,String.format("End period date is %s",c.toString()))
         m_endDate = c.time.time
     }
 

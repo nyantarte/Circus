@@ -23,6 +23,7 @@ class TransactionListActivity : AppCompatActivity() ,AdapterView.OnItemClickList
         val TRANS_LIST_KEY="TransactionList"
         val TRANS_BEGIN_DATE_KEY="BeginDate"
         val TRANS_END_DATE_KEY="EndDate"
+        val TRANS_USAGE_KEY="Usage"
     }
     private var m_tranList:ListView?=null
     private val m_data=ArrayList<MoneyBookTransaction>()
@@ -35,12 +36,7 @@ class TransactionListActivity : AppCompatActivity() ,AdapterView.OnItemClickList
         val bar = this.supportActionBar
         bar!!.setDisplayHomeAsUpEnabled(true)
 
-        for(s in (intent.getSerializableExtra(TRANS_LIST_KEY) as Array<MoneyBookTransaction>)/*intent.getStringArrayListExtra(TRANS_LIST_KEY)*/){
-//            val obj=JSONObject(s)
-            val obj=s
-//            m_data.add(MoneyBookTransaction(obj))
-            m_data.add(obj)
-        }
+
 
         m_tranList=findViewById(R.id.TransactionListList)
         m_tranList!!.setOnItemClickListener(this)
@@ -90,10 +86,16 @@ class TransactionListActivity : AppCompatActivity() ,AdapterView.OnItemClickList
         startActivity(i)
     }
 
-    override fun onResume() {
-
+    override fun onStart() {
+        super.onStart()
+        for(s in (intent.getSerializableExtra(TRANS_LIST_KEY) as Array<MoneyBookTransaction>)/*intent.getStringArrayListExtra(TRANS_LIST_KEY)*/){
+//            val obj=JSONObject(s)
+            val obj=s
+//            m_data.add(MoneyBookTransaction(obj))
+            m_data.add(obj)
+        }
         m_tranList!!.adapter=ArrayAdapter<MoneyBookTransaction>(this,android.R.layout.simple_list_item_1,m_data.toTypedArray())
-        super.onResume()
     }
+
 
 }

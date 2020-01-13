@@ -1,0 +1,11 @@
+{
+  "name": "赤城",
+  "type": "AIR_CARRIER",
+  "life": "B",
+  "atk": "E",
+  "torpedo": "E",
+  "avoid": "C",
+  "air_def": "B",
+  "air_atk": "S",
+  "range": "S"
+}

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
@@ -137,6 +139,24 @@ public class IOUtils {
         Log.i(IOUtils.class.getName(),String.format("Saved file to %s",f.getAbsolutePath()));
         return new BufferedWriter(new FileWriter(f,false));
 
+    }
+
+    public static Bitmap getBitmap(String s,AssetManager am)
+    throws IOException
+    {
+        InputStream is=null;
+        try{
+            is=am.open(s);
+        }catch (Exception e){
+//            e.printStackTrace();
+
+                is = getInputStreamFromStorage(s);
+
+        }
+        if(null==is){
+            return null;
+        }
+        return BitmapFactory.decodeStream(is);
     }
 
 

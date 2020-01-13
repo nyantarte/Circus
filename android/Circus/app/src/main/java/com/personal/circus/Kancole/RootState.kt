@@ -13,7 +13,7 @@ class RootState: IGameState {
     private var m_scMode:ScreenMode?=null
     constructor(sys:IGameSystem){
         m_scMode=sys.getScreenMode()
-        m_target=KancoreData.getInstance(null)!!.getRandomChara(sys)
+        m_target=KancoreData.getInstance(null)!!.getRandomChara(sys,0)
 
     }
     override fun onDraw(r: IRenderer){

@@ -1,0 +1,11 @@
+{
+  "name": "ベルファスト",
+  "type": "LIGHTCRUISER",
+  "rareity": "SS",
+  "life": "B",
+  "atk": "B",
+  "torpedo": "A",
+  "avoid": "B",
+  "air_def": "C",
+  "air_atk": "E"
+}
