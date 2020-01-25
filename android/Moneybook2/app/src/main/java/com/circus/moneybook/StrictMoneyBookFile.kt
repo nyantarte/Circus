@@ -95,10 +95,12 @@ class StrictMoneyBookFile:IMoneyBookFile{
                     if(paymethodFlags.get(o.payMethod)!!&&
                         usageList.get(o.usage)!!) {
                         result.add(o)
+
+                    }else{
                         Log.e(this.javaClass.name,o.toString())
                     }
                 }else{
-
+                    Log.e(this.javaClass.name,o.toString())
                 }
             }
         }
@@ -117,6 +119,7 @@ class StrictMoneyBookFile:IMoneyBookFile{
         v.usage=params[3]
         v.value= parseInt(params[4])
         v.note=params[5]
+        //Log.i(this.javaClass.name,v.toString())
         return v
     }
 

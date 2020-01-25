@@ -1,5 +1,7 @@
 package com.circus.girlsfleet;
 
+import android.graphics.Rect;
+
 public class Vector {
     public float[] xyz=new float[3];
 
@@ -12,6 +14,12 @@ public class Vector {
         setX(x);
         setY(y);
         setZ(z);
+    }
+
+    public Vector(Rect r){
+        setX(r.centerX());
+        setY(r.centerY());
+        setZ(0.0f);
     }
     public float getX(){
         return xyz[0];

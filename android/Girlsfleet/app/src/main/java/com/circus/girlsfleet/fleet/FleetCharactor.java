@@ -7,9 +7,15 @@ import java.util.HashMap;
 public class FleetCharactor {
 
     private Charactor m_baseData;
-    private int m_life;
+    private int m_life,m_maxLife;
+    public int getMaxLife(){
+        return m_maxLife;
+    }
     public int getLife(){
         return m_life;
+    }
+    public void setLife(int v){
+        m_life=v;
     }
     private int m_atk;
     public int getAtk(){
@@ -38,6 +44,8 @@ public class FleetCharactor {
             m_atk+=Math.max(1,m_atk*0.1f);
 
         }
+        m_maxLife=m_life;
+
     }
 
 }

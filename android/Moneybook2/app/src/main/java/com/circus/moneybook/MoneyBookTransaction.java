@@ -43,6 +43,6 @@ public class MoneyBookTransaction implements Serializable {
     @Override
     public String toString(){
 
-        return String.format("%s %s %s %d %s", SimpleDateFormat.getInstance().format(new  Date(this.timeStamp)), value<0?"支出":"収入",usage,Math.abs(value),note);
+        return String.format("%s %s %s %s %d %s", SimpleDateFormat.getInstance().format(new  Date(this.timeStamp)), value<0?"支出":"収入",payMethod,usage,Math.abs(value),note);
     }
 }

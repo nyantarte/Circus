@@ -15,33 +15,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ListView
-        android:id="@+id/CurrentPartyMemberList"
-        android:layout_width="match_parent"
-        android:layout_height="504dp" />
-
     <Spinner
-        android:id="@+id/PartyMemberSelector"
+        android:id="@+id/CurrentPartyMemberSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/AddMemberBtn"
+            android:id="@+id/SwitchMemBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="+" />
+            android:text="Switch" />
 
         <Button
-            android:id="@+id/DelMemberBtn"
+            android:id="@+id/DelMemBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-" />
+            android:text="Delete" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/PartyRecomendList"
+        android:layout_width="match_parent"
+        android:layout_height="380dp" />
+
 </LinearLayout>

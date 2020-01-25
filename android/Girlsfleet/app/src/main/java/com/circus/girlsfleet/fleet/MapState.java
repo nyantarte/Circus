@@ -15,6 +15,7 @@ import com.circus.girlsfleet.ScreenMode;
 import com.circus.girlsfleet.Size;
 import com.circus.girlsfleet.Vector;
 
+import java.util.List;
 import java.util.Random;
 
 public class MapState implements IGameState {
@@ -36,7 +37,7 @@ public class MapState implements IGameState {
         m_mapGrid=new Object[m_map.getSize().getHeight()][m_map.getSize().getWidth()];
         m_mapGrid[0][0]=new Charactor();
         m_playerGrid=new Point(0,0);
-        genEnemy(s);
+
     }
     public void onDraw(IRenderer r){
         if(MainActivity.isDrawSimpleMode) {
@@ -65,7 +66,14 @@ public class MapState implements IGameState {
         }
     }
     public void onUpdate(IGameSystem s){
+        if(GameConfig.MAP_MOVE_COUNT<m_count){
+            m_count=0;
+        }
         if(0==m_count){
+            if(m_map.getBattleNum()== m_battleNum){
+                s.getStateStack().pop();
+            }
+            genEnemy(s);
             //移動の為の初期化
             int px=gridXToScreenX(m_playerGrid.x);
             int py=gridYToScreenY(m_playerGrid.y);
@@ -75,6 +83,7 @@ public class MapState implements IGameState {
             m_playerDir=Vector.sub(new Vector(tx,ty),m_playerPos);
             m_playerDir=Vector.div(m_playerDir, GameConfig.MAP_MOVE_COUNT);
             m_mapGrid[m_playerGrid.y][m_playerGrid.x]=null;
+
         }
         if(GameConfig.MAP_MOVE_COUNT>m_count){
             //移動実行
@@ -82,7 +91,18 @@ public class MapState implements IGameState {
             ++m_count;
         }
         if(GameConfig.MAP_MOVE_COUNT==m_count){
-            s.getStateStack().push(new SimpleBattleState(s,null));
+            FleetParty eParty=new FleetParty();
+            List<String> cTbl=m_map.getDropCharaList();
+            for(int i=0;i < s.getRandom().nextInt(eParty.getMembers().length);++i)
+            {
+                String tmpName=cTbl.get(s.getRandom().nextInt(cTbl.size()));
+                eParty.getMembers()[i]=new FleetCharactor(MainActivity.charaTbl.get(tmpName));
+            }
+            m_playerGrid.x=m_targetGrid.x;
+            m_playerGrid.y=m_targetGrid.y;
+            s.getStateStack().push(new SimpleBattleState(s,eParty));
+            ++m_battleNum;
+            ++m_count;
         }
     }
     public void onTouch(IGameSystem s, int x,int y){
@@ -97,12 +117,12 @@ public class MapState implements IGameState {
             x = s.getRandom().nextInt(m_mapGrid[0].length);
             y = s.getRandom().nextInt(m_mapGrid.length);
         } while(null!=m_mapGrid[y][x]);
-        m_mapGrid[y][x]=new Charactor();
+
         m_targetGrid=new Point(x,y);
-            if(m_battleNum<m_map.getBattleNum()){
+
+            m_mapGrid[y][x]=new Charactor();
 
 
-        }
 
     }
     private int gridXToScreenX(int gx){
